@@ -54,60 +54,7 @@ int max(int a, int b) {
     int temp =a>b ? a:b;
     return temp;
 }
-
-void plotter()
-{
-  
-   int *arr,n;
-   srand(time(NULL));
-   FILE *f1,*f2,*f3;
-   
-   f1=fopen("HEAPSORTBEST.txt","a");
-   f2=fopen("HEAPSORTWORST.txt","a");
-   f3=fopen("HEAPSORTAVG.txt","a");
-    n=100;
-   
-    while(n<=1000)
-    {
-       arr=(int *)malloc(sizeof(int)*(n+1));
-       for(int i=0;i<n;i++)
-       *(arr+i)=n-i+1;
-       count=0;
-        //best case
-         heapSort(arr,n);
-         count=max(count,count2);
-        fprintf(f1,"%d\t%d\n",n,count);
-        //printf("%d\t%d\n",n,count);
- 
-     //worst case
-      count=0;
-      for(int i=0;i<n;i++)
-      *(arr+i)=i+1;
-        heapSort(arr,n);
-            count=max(count,count2);
-      fprintf(f2,"%d\t%d\n",n,count);
-      //printf("%d\t%d\n",n,count);
-
-     //AVG case
-      for(int i=0;i<n;i++)
-      *(arr+i)=rand()%n;
-      count=0;
-      heapSort(arr,n);
-          count=max(count,count2);
-      fprintf(f3,"%d\t%d\n",n,count);
-      // printf("%d\t%d\n",n,count);
-
-      n=n+100;
-      free(arr);
-    }
-    fclose(f1);
-    fclose(f2);
-    fclose(f3);
-}
-
-
-
-void tester()
+void main()
 {
   int *arr, n;
    printf("ENTER THE NUMBER OF ELEMENTS\n");
@@ -133,19 +80,3 @@ void tester()
 }
 
 
-void main()
-{
-    for(;;)
-    {
-        int key;
-        printf("ENTER THE CHOICE \n1.TO TEST \n2.TO PLOT\nO  TO EXIT\n");
-        scanf("%d",&key);
-         
-         switch(key)
-         {
-           case 1:tester();break;
-           case 2:plotter();break;
-           default:exit(1);
-         } 
-    }
-}
