@@ -3,7 +3,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #define MAX 100
-int count=0;
+
 int graph[MAX][MAX], visited[MAX],path[MAX], count=0;
 int stack[MAX], top=-1;
 int c=0;
@@ -71,7 +71,8 @@ if(k==1)
 count=0;
      for(int i=0; i<v; i++) {
         if(visited[i] == 0)
-            dfs(n, i);
+            dfs(v, i);
+     }
            if(k==0)
          fprintf(f2,"%d\t%d\n",v,count);
          else
