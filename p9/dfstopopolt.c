@@ -3,6 +3,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #define MAX 100
+int count=0;
 int graph[MAX][MAX], visited[MAX],path[MAX], count=0;
 int stack[MAX], top=-1;
 int c=0;
@@ -12,6 +13,7 @@ void dfs(int n, int start) {
     path[start] =1;
     for(int i=0; i<n; i++)
       {
+          count++;
           if(graph[start][i] && visited[i]==1&& path[i]==1)
               c=1 ;
         if(graph[start][i] && visited[i]==0)
@@ -66,26 +68,14 @@ if(k==1)
     }
 
 }
-
-    bfsCount = 0, cyclic=0;
-    count = 0;
-    orderCount = 0;
-    bfsCount++;
-    bfs(v, 0);
-    if(count != v){
-        start = 1;
-        while(count != v){
-            if(visited[start] != 1) {
-                bfsCount++;
-                bfs(v, start);
-            }
-            start++;
-        }
-    }
+count=0;
+     for(int i=0; i<v; i++) {
+        if(visited[i] == 0)
+            dfs(n, i);
            if(k==0)
-         fprintf(f2,"%d\t%d\n",v,orderCount);
+         fprintf(f2,"%d\t%d\n",v,count);
          else
-          fprintf(f1,"%d\t%d\n",v,orderCount);
+          fprintf(f1,"%d\t%d\n",v,count);
          // printf("%d\t%d\n",v,orderCount);
 
 
