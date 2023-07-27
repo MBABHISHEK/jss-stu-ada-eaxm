@@ -69,7 +69,6 @@ if(c==0)
     fprintf(f1,"%d\t%d\n",n,counter);
     else
     fprintf(f2,"%d\t%d\n",n,counter);
-    printf("\n");
 
 }
    fclose(f1);
@@ -79,7 +78,7 @@ if(c==0)
 
 void main()
 {
-           case 2:for(int i=0;i<2;i++)
+           for(int i=0;i<2;i++)
                    ploter(i);
         printf("the graph is plotted\n");
 }
