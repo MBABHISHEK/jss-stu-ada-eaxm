@@ -43,7 +43,7 @@ void main()
        printf("%d ",arr[i]);
     printf("\n");
 
-      selectionsort(arr,0,n-1);
+      selectionsort(arr,n);
 
       printf("THE ELEMENTS OF THE ARRAY BEFORE SORTING\n"); 
     for(int i=0;i<n;i++)
