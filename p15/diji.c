@@ -1,127 +1,132 @@
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
+#define AL 10;
 
-struct Vertex {
-    int index;
-    int distance;
-};
+int n, i, j, src, cost[10][10], d[10] = {0}, removed[10] = {0}, count = 0;
+int heapsize;
+struct vertex
+{
+    int id;
+    int dist;
+} heap[10];
+typedef struct vertex ver;
 
-void swap(struct Vertex *a, struct Vertex *b) {
-    struct Vertex temp = *a;
+// Min Heap function declaration
+void swap(struct vertex *a, struct vertex *b)
+{
+    struct vertex temp = *a;
     *a = *b;
     *b = temp;
 }
-
-//this for heapify
-void minHeapify(struct Vertex heap[], int size, int index) {
-    int smallest = index;
-    int leftChild = 2 * index + 1;
-    int rightChild = 2 * index + 2;
-
-    if (leftChild < size && heap[leftChild].distance < heap[smallest].distance)
-        smallest = leftChild;
-
-    if (rightChild < size && heap[rightChild].distance < heap[smallest].distance)
-        smallest = rightChild;
-
-    if (smallest != index) {
-        swap(&heap[index], &heap[smallest]);
-        minHeapify(heap, size, smallest);
+void heapSort(struct vertex arr[], int n)
+{
+    for (int i = n / 2 - 1; i >= 0; i--)
+    {
+        heapify(arr, n, i);
     }
 }
+// Min heap function declaration end
 
+void heapify(struct vertex arr[], int n, int i)
+{
+    int largest = i;
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
 
-//this used to build the heap
-void buildMinHeap(struct Vertex heap[], int size) {
-    for (int i = size / 2 - 1; i >= 0; i--)
-        minHeapify(heap, size, i);
+    if (left < n && arr[left].dist < arr[largest].dist)
+        largest = left;
+    if (right < n && arr[right].dist < arr[largest].dist)
+        largest = right;
+
+    if (largest != i)
+    {
+        swap(&arr[i], &arr[largest]);
+        heapify(arr, n, largest);
+    }
 }
-
-//this used to get the root and heapify again 
-struct Vertex extractMin(struct Vertex heap[], int *size) {
-    struct Vertex minVertex = heap[0];
-    heap[0] = heap[*size - 1];
-    (*size)--;
-    minHeapify(heap, *size, 0);
-    return minVertex;
-}
-
-//this for updating the value in the heap if new value is lesser than old value
-void decreaseKey(struct Vertex heap[], int index, int newDistance,int size) {
-int k;
-    for(int i=0;i<size;i++)
+void makegraph()
+{
+    // Make Graph
+    printf("Enter the total number of vertices:");
+    scanf("%d", &n);
+    printf("Enter the cost matrix of the Graph\n");
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < n; j++)
         {
-            if(heap[i]==index)
-                k=i;
+            scanf("%d", &cost[i][j]);
+            if (cost[i][j] == 0)
+                cost[i][j] = INT_MAX;
         }
-    heap[k].distance = newDistance;
-    while (index > 0 && heap[(index - 1) / 2].distance > heap[index].distance) {
-        swap(&heap[index], &heap[(index - 1) / 2]);
-        index = (index - 1) / 2;
     }
+
+    // Initialise the source vertex distance to 0 and rest all to infinity(INT_MAX)
+    printf("Enter the source vertex:");
+    scanf("%d", &src);
+    for (i = 0; i < n; i++)
+    {
+        d[i] = INT_MAX;
+    }
+    d[src] = 0;
 }
-
-void dijkstra(int n, int cost[10][10], int s, int dist[10]) {
-    int i, count = 0;
-    struct Vertex minHeap[10];
-    int  visited[10] = { 0 };
-
-    //this for instialization of the each vertex and if it is root then it is 0
-    //otherwise it is infinite
-    for (i = 1; i <= n; i++) {
-        minHeap[i - 1].index = i;
-        minHeap[i - 1].distance = (i == s) ? 0 : 999;
+// returns the min of the heap and heapifies the rest of the elements
+ver deleteheap(ver heap[])
+{
+    ver min = heap[0];
+    heap[0] = heap[heapsize - 1];
+    heapsize = heapsize - 1;
+    heapify(heap, heapsize, 0);
+    return min;
+}
+void dijkstra()
+{
+    for (i = 0; i < n; i++)
+    {
+        heap[i].id = i;
+        heap[i].dist = INT_MAX;
     }
-
-    int heapSize = n;
-    buildMinHeap(minHeap, heapSize);
-
-    while (count < n) {
-        struct Vertex minVertex = extractMin(minHeap, &heapSize);
-        int u = minVertex.index;
-        visited[u] = 1;
+    heap[src].dist = 0;
+    heapsize = n;
+    // pulling source to index 0
+    heapSort(heap, heapsize);
+    while (count < n)
+    {
+        ver minvertex = deleteheap(heap);
+        int u = minvertex.id;
+        removed[u] = 1;
         count++;
 
-        for (i = 1; i <= n; i++) {
-            if (!visited[i] && cost[u][i] > 0) {
-                int alt = dist[u] + cost[u][i];
-                if (alt < dist[i]) {
-                    dist[i] = alt;
-                    decreaseKey(minHeap, i - 1, alt,heapSize);
+        for (i = 0; i < n; i++)
+        {
+            if (!removed[i] && cost[u][i] != INT_MAX)
+            {
+                if ((d[u] + cost[u][i]) < d[i])
+                {
+                    d[i] = (d[u] + cost[u][i]);
+                    for (int o = 0; o < heapsize; o++)
+                    {
+                        if (heap[o].id == i)
+                        {
+                            heap[o].dist = heap[o].dist < d[i] ? heap[o].dist : d[i];
+                            break;
+                        }
+                    }
+
+                    heapSort(heap, heapsize);
                 }
             }
         }
     }
 }
-
-int main() {
-    int i, j, n, s, cost[10][10], dist[10];
-
-    printf("Enter the total number of nodes: ");
-    scanf("%d", &n);
-
-    printf("Read the cost matrix:\n");
-    for (i = 1; i <= n; i++) {
-        for (j = 1; j <= n; j++) {
-            scanf("%d", &cost[i][j]);
-            if (cost[i][j] == 0)
-                cost[i][j] = 999;
-        }
+void main()
+{
+    makegraph();
+    dijkstra();
+    printf("Shortest path id %d is:\n", src);
+    for (i = 0; i < n; i++)
+    {
+        if (src != i)
+            printf("%d -> %d = %d\n", src, i, d[i]);
     }
-
-    printf("Enter the source vertex: ");
-    scanf("%d", &s);
-
-    for (i = 1; i <= n; i++)
-        dist[i] = (i == s) ? 0 : 999;
-
-    dijkstra(n, cost, s, dist);
-
-    printf("Shortest path from %d is:\n", s);
-    for (i = 1; i <= n; i++) {
-        if (s != i)
-            printf("%c -> %c = %d\n", s+65-1, i+65-1, dist[i]);
-    }
-
-    return 0;
 }
