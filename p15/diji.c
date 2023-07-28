@@ -47,8 +47,14 @@ struct Vertex extractMin(struct Vertex heap[], int *size) {
 }
 
 //this for updating the value in the heap if new value is lesser than old value
-void decreaseKey(struct Vertex heap[], int index, int newDistance) {
-    heap[index].distance = newDistance;
+void decreaseKey(struct Vertex heap[], int index, int newDistance,int size) {
+int k;
+    for(int i=0;i<size;i++)
+        {
+            if(heap[i]==index)
+                k=i;
+        }
+    heap[k].distance = newDistance;
     while (index > 0 && heap[(index - 1) / 2].distance > heap[index].distance) {
         swap(&heap[index], &heap[(index - 1) / 2]);
         index = (index - 1) / 2;
@@ -81,7 +87,7 @@ void dijkstra(int n, int cost[10][10], int s, int dist[10]) {
                 int alt = dist[u] + cost[u][i];
                 if (alt < dist[i]) {
                     dist[i] = alt;
-                    decreaseKey(minHeap, i - 1, alt);
+                    decreaseKey(minHeap, i - 1, alt,heapSize);
                 }
             }
         }
