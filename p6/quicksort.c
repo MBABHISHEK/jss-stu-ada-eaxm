@@ -56,7 +56,7 @@ void swap(int  *a,int *  b)
 
 }
 
-void plotter()
+void main()
 {
 
    int *arr,n;
@@ -106,48 +106,3 @@ void plotter()
     fclose(f3);
 }
 
-
-
-void tester()
-{
-  int *arr, n;
-   printf("ENTER THE NUMBER OF ELEMENTS\n");
-   scanf("%d",&n);
-
-   arr=(int *)malloc(sizeof(int)*n);
-   printf("ENTER THE ELEMENTS OF THE ARRAY\n");
-      for(int i=0;i<n;i++)
-       scanf("%d",&arr[i]);
-
-  printf("THE ELEMENTS OF THE ARRAY BEFORE SORTING\n"); 
-    for(int i=0;i<n;i++)
-       printf("%d ",arr[i]);
-    printf("\n");
-
-      quicksort(arr,0,n-1);
-
-      printf("THE ELEMENTS OF THE ARRAY AFTER SORTING\n"); 
-    for(int i=0;i<n;i++)
-       printf("%d ",arr[i]);
-       printf("\n");
-       printf("\n");
-}
-
-
-void main()
-{
-    for(;;)
-    {
-        int key;
-        printf("ENTER THE CHOICE \n1.TO TEST \n2.TO PLOT\nO  TO EXIT\n");
-        scanf("%d",&key);
-         
-         switch(key)
-         {
-           case 1:tester();break;
-           case 2:plotter();break;
-           default:exit(1);
-         } 
-
-    }
-}
