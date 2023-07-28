@@ -71,7 +71,7 @@ void main()
       scanf("%d",arr[i]);
       printf("ENTER THE KEY ELEMENT\n");
       scanf("%d",key);
-      r=binarySearch(key,arr,0,n-1);
+      r=binarySearch(key,arr,n-1,0);
         if (r != -1)
         {
             printf("the element is present at the index \n",r);
