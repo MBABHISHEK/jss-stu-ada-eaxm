@@ -80,10 +80,10 @@ printf("Enter the adjacency matrix\n");
 
   for(int i=0;i<v;i++)
 {
-  printf("Enter 1 for the vertices adjacent to vertex %c\n",i+65); 
+  //printf("Enter 1 for the vertices adjacent to vertex %c\n",i+65); 
    for(int j=0;j<v;j++)
   {
-    printf("\nVertex %c : ",j+65);
+    //printf("\nVertex %c : ",j+65);
      scanf("%d",&arr[i][j]);
   }
 }
