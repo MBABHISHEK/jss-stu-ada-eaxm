@@ -41,7 +41,7 @@ void ploter(int k)
     for(int i=1;i<=10;i++)
   {
     v=i;
-  int *arr[v];
+  int *arr;
   for(int i=0;i<v;i++)
   arr[i]=(int *)malloc(sizeof(int)*v); 
 
@@ -99,7 +99,7 @@ if(k==1)
           fprintf(f1,"%d\t%d\n",v,orderCount);
          // printf("%d\t%d\n",v,orderCount);
 
-
+    free(arr);
   }
 
   fclose(f1);
