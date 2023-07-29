@@ -31,9 +31,7 @@ void ploter(int k)
     for(int i=1;i<=10;i++)
   {
     v=i;
-  int * arr;
-  for(int i=0;i<v;i++)
-  arr[i]=(int *)malloc(sizeof(int)*v); 
+
 
 
  if(k==0)
@@ -46,10 +44,10 @@ void ploter(int k)
        
        if(i!=j)
        {
-        arr[i][j] =1;
+        graph[i][j] =1;
        }
        else
-       arr[i][j] =0;
+       graph[i][j] =0;
   }
 }
  }
@@ -59,11 +57,11 @@ if(k==1)
     for(int i=0;i<v;i++)
     {
         for(int j=0;j<v;j++)
-         arr[i][j] =0;
+         graph[i][j] =0;
     }
     for(int i=0;i<v-1;i++)
     {
-            arr[i][i+1]=1;
+            graph[i][i+1]=1;
     }
 
 }
@@ -87,7 +85,6 @@ if(k==1)
          fprintf(f2,"%d\t%d\n",v,count);
          else
           fprintf(f2,"%d\t%d\n",v,count);
-     free(arr);
 
   }
 
