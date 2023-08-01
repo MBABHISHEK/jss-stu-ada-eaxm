@@ -26,7 +26,7 @@ void ploter(int k)
 {
 
     FILE *f1= fopen("DFSBEST.txt", "a");
-    FILE *f2=fopen("DFWOSR.txt", "a");
+    FILE *f2=fopen("DFSWORsT.txt", "a");
     int v;
     for(int i=1;i<=10;i++)
   {
