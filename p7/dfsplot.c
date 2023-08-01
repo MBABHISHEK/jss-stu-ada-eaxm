@@ -84,7 +84,7 @@ if(k==1)
            if(k==0)
          fprintf(f2,"%d\t%d\n",v,dcount);
          else
-          fprintf(f2,"%d\t%d\n",v,dcount);
+          fprintf(f1,"%d\t%d\n",v,dcount);
 
   }
 
