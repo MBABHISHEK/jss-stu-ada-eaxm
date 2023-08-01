@@ -1,4 +1,4 @@
-// code from hdkiranbhradwaj this looks simple try 
+
 
 #include <limits.h>
 #include <stdio.h>
