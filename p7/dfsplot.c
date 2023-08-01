@@ -82,9 +82,9 @@ if(k==1)
         }
 
            if(k==0)
-         fprintf(f2,"%d\t%d\n",v,count);
+         fprintf(f2,"%d\t%d\n",v,dcount);
          else
-          fprintf(f2,"%d\t%d\n",v,count);
+          fprintf(f2,"%d\t%d\n",v,dcount);
 
   }
 
