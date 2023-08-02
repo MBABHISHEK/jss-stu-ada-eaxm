@@ -5,7 +5,7 @@
 #include <stdlib.h>
 int n, i, j, cost[10][10], cnt = 0, visited[10], removed[10];
 int heapsize = 0;
-
+int heapcount,graphcount;
 struct edge
 {
     int v;
@@ -28,6 +28,7 @@ void heapify(struct edge arr[], int n, int i)
     int left = 2 * i + 1;
     int right = 2 * i + 2;
 
+     heapcount++;
     if (left < n && arr[left].dist < arr[largest].dist)
         largest = left;
     if (right < n && arr[right].dist < arr[largest].dist)
@@ -105,6 +106,7 @@ void prim()
             }
             if (visited[i] && cost[v][i] != INT_MAX && !removed[i])
             { // visited but not removed from heap --> scope for minimisation?
+                graphcount++;
                 for (j = 0; j < heapsize; j++)
                 { // finding that edge in the sorted heap
                     if (heap[j].u == i && cost[v][i] < heap[j].dist)
@@ -130,4 +132,6 @@ void main()
         sum += VT[i].dist;
     }
     printf("Minimum Distance is: %d", sum);
+    int max=(graphcount<heapcount)?heapcount:graphcount;
+    printf("THE COUNT IS %d\n",max);
 }
