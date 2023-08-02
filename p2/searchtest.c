@@ -68,9 +68,9 @@ void main()
       scanf("%d",&n);
       printf("ENTER THE ELEMENTS OF THE ARRAY\n");
       for(int i=0;i<n;i++)
-      scanf("%d",arr[i]);
+      scanf("%d",&arr[i]);
       printf("ENTER THE KEY ELEMENT\n");
-      scanf("%d",key);
+      scanf("%d",&key);
       r=binarySearch(key,arr,n-1,0);
         if (r != -1)
         {
