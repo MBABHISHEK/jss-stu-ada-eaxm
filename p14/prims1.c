@@ -124,6 +124,8 @@ void prim()
 void main()
 {
     int sum = 0;
+     heapcount=0;
+    graphcount=0;
     makegraph();
     prim();
     for (int i = 1; i < cnt; i++)
