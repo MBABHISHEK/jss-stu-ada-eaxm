@@ -4,12 +4,15 @@
 #define AL 10;
 
 int n, i, j, src, cost[10][10], d[10] = {0}, removed[10] = {0}, count = 0;
+
+
 int heapsize;
 struct vertex
 {
     int id;
     int dist;
 } heap[10];
+
 typedef struct vertex ver;
 
 // Min Heap function declaration
@@ -27,9 +30,10 @@ void heapSort(struct vertex arr[], int n)
     }
 }
 // Min heap function declaration end
-
+int dcount=0;
 void heapify(struct vertex arr[], int n, int i)
 {
+    dcount++;
     int largest = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
@@ -70,15 +74,19 @@ void makegraph()
     }
     d[src] = 0;
 }
+
+
 // returns the min of the heap and heapifies the rest of the elements
 ver deleteheap(ver heap[])
 {
     ver min = heap[0];
     heap[0] = heap[heapsize - 1];
     heapsize = heapsize - 1;
-    heapify(heap, heapsize, 0);
+  //  heapify(heap, heapsize, 0);
     return min;
 }
+
+
 void dijkstra()
 {
     for (i = 0; i < n; i++)
@@ -89,6 +97,7 @@ void dijkstra()
     heap[src].dist = 0;
     heapsize = n;
     // pulling source to index 0
+
     heapSort(heap, heapsize);
     while (count < n)
     {
@@ -101,6 +110,7 @@ void dijkstra()
         {
             if (!removed[i] && cost[u][i] != INT_MAX)
             {
+                dcount++;
                 if ((d[u] + cost[u][i]) < d[i])
                 {
                     d[i] = (d[u] + cost[u][i]);
@@ -113,12 +123,16 @@ void dijkstra()
                         }
                     }
 
-                    heapSort(heap, heapsize);
+            
                 }
             }
         }
+
+         heapSort(heap, heapsize);
     }
 }
+
+
 void main()
 {
     makegraph();
@@ -129,4 +143,5 @@ void main()
         if (src != i)
             printf("%d -> %d = %d\n", src, i, d[i]);
     }
+    printf("the count is %d\n",dcount);
 }
