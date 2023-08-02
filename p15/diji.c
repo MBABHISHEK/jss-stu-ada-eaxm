@@ -5,7 +5,7 @@
 
 int n, i, j, src, cost[10][10], d[10] = {0}, removed[10] = {0}, count = 0;
 
-
+int heapcount,graphcount;
 int heapsize;
 struct vertex
 {
@@ -33,7 +33,7 @@ void heapSort(struct vertex arr[], int n)
 int dcount=0;
 void heapify(struct vertex arr[], int n, int i)
 {
-    dcount++;
+    heapcount++;
     int largest = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
@@ -110,7 +110,7 @@ void dijkstra()
         {
             if (!removed[i] && cost[u][i] != INT_MAX)
             {
-                dcount++;
+                graphcount++;
                 if ((d[u] + cost[u][i]) < d[i])
                 {
                     d[i] = (d[u] + cost[u][i]);
@@ -135,6 +135,8 @@ void dijkstra()
 
 void main()
 {
+    heapcount=0;
+    graphcount=0;
     makegraph();
     dijkstra();
     printf("Shortest path id %d is:\n", src);
@@ -143,5 +145,6 @@ void main()
         if (src != i)
             printf("%d -> %d = %d\n", src, i, d[i]);
     }
-    printf("the count is %d\n",dcount);
+     int max=(graphcount<heapcount)?heapcount:graphcount;
+    printf("THE COUNT IS %d\n",max);
 }
