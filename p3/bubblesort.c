@@ -17,13 +17,13 @@ int bubblesort(int *a,int n)
         if(a[j]>a[j+1])
       {
          t=*(a+j);
-         (a+j)=(a+j+1);
+         *(a+j)=*(a+j+1);
          *(a+j+1)=t;
          flag=1;
       }  
      }
     
-      if(flag!=1)
+      if(flag==0)
       break;
       }
 
