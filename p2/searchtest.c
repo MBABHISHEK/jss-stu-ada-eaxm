@@ -22,7 +22,7 @@ int binarySearch(int key, int *a, int high, int low)
     
     int mid;
     mid = (high + low) / 2;
-    if (low > high)
+    if (low <= high)
         return -1;
     if (*(a + mid) == key)
         return mid;
