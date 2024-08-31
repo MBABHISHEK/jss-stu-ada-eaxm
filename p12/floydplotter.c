@@ -5,14 +5,21 @@
 
 int graph[100][100];
 int counter = 0;
+int count = 0;
 
-void floydWarshall(int n) {
+int minimum(int a, int b) {
+    return (a < b) ? a : b;
+}
+
+void floyd(int n) {
+    int t;
     for (int k = 1; k <= n; k++) {
         for (int i = 1; i <= n; i++) {
+            t = graph[i][k];
             for (int j = 1; j <= n; j++) {
-                // Update the shortest path matrix
-                if (graph[i][j] > graph[i][k] + graph[k][j]) {
-                    graph[i][j] = graph[i][k] + graph[k][j];
+                if (t < graph[i][j]) {
+                    count++;
+                    graph[i][j] = minimum(graph[i][j], (graph[i][k] + graph[k][j]));
                 }
                 counter++;
             }
@@ -51,12 +58,13 @@ void plotter(int c) {
         }
 
         counter = 0;
-        floydWarshall(n);
+        count = 0;
+        floyd(n);
 
         if (c == 0)
-            fprintf(f1, "%d\t%d\n", n, counter);
+            fprintf(f1, "%d\t%d\t%d\n", n, counter, count);
         else
-            fprintf(f2, "%d\t%d\n", n, counter);
+            fprintf(f2, "%d\t%d\t%d\n", n, counter, count);
     }
 
     fclose(f1);
