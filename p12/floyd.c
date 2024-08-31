@@ -1,79 +1,52 @@
-/* Program to implement Floyd's Algorithm with Plotter */
+//PROGRAM TO IMPLEMENT THE KNAPSAC PROBLEM WITH BOTTOM UP APPROACH
+// this is only 4 testing and ploting will be updated soon as like warshal
 
-#include <stdio.h>
-#include <stdlib.h>
+// Floyd's Algorithm
+#include<stdio.h>
+#include<stdlib.h>
+#define MAX 100
+int graph[MAX][MAX];
 
-int graph[100][100];
-int counter = 0;
-int count = 0;
-
-int minimum(int a, int b) {
-    return (a < b) ? a : b;
+int minimum (int a, int b) {
+    int min = (a<b) ? a : b;
+    return min;
 }
-
-void floyd(int n) {
+int count=0
+void floyd (int n) {
     int t;
-    for (int k = 1; k <= n; k++) {
-        for (int i = 1; i <= n; i++) {
-            t = graph[i][k];
-            for (int j = 1; j <= n; j++) {
-                if (t < graph[i][j]) {
+    for(int k=1; k<=n; k++) {
+        for(int i=1; i<=n; i++) {
+              t=graph[i][k];
+            for(int j=1; j<=n; j++) {
+                if(t<graph[i][j])
+                {
                     count++;
-                    graph[i][j] = minimum(graph[i][j], (graph[i][k] + graph[k][j]));
+                graph[i][j] = minimum(graph[i][j], (graph[i][k] + graph[k][j]));
                 }
-                counter++;
             }
         }
     }
-}
-
-void plotter(int c) {
-    FILE *f1 = fopen("floydBest.txt", "a");
-    FILE *f2 = fopen("floydWorst.txt", "a");
-    
-    for (int i = 1; i <= 10; i++) {
-        int n = i;
-        if (c == 1) { // Worst case: Dense graph (complete graph)
-            for (int i = 1; i <= n; i++) {
-                for (int j = 1; j <= n; j++) {
-                    if (i != j) {
-                        graph[i][j] = rand() % 10 + 1; // Random weights
-                    } else {
-                        graph[i][j] = 0; // No self-loops
-                    }
-                }
-            }
-        }
-
-        if (c == 0) { // Best case: Sparse graph (minimal edges)
-            for (int i = 1; i <= n; i++) {
-                for (int j = 1; j <= n; j++) {
-                    graph[i][j] = (i == j) ? 0 : INT_MAX; // Initialize graph with infinity (no direct path)
-                }
-            }
-            for (int i = 1; i < n; i++) {
-                graph[i][i+1] = rand() % 10 + 1; // Create a path
-            }
-            graph[n][1] = rand() % 10 + 1; // Complete the cycle
-        }
-
-        counter = 0;
-        count = 0;
-        floyd(n);
-
-        if (c == 0)
-            fprintf(f1, "%d\t%d\t%d\n", n, counter, count);
-        else
-            fprintf(f2, "%d\t%d\t%d\n", n, counter, count);
-    }
-
-    fclose(f1);
-    fclose(f2);
 }
 
 void main() {
-    for (int i = 0; i < 2; i++) {
-        plotter(i);
+    int n, i, j;
+    printf("\nEnter the number of vertices:\n");
+    scanf("%d", &n);
+    printf("\nEnter 99999 for representing infinity.\n");
+    printf("\nEnter the weight matrix:\n");
+    for(i=1; i<=n; i++) {
+        for(j=1; j<=n; j++) {
+            scanf("%d", &graph[i][j]);
+        }
     }
-    printf("The graph plotting is completed\n");
+
+    floyd(n);
+
+    printf("\nAll pair shortest distance matrix is:\n");
+    for(i=1; i<=n; i++) {
+        for(j=1; j<=n; j++) {
+            printf("%d  ", graph[i][j]);
+        }
+        printf("\n");
+    }
 }
