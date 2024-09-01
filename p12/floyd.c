@@ -11,7 +11,7 @@ int minimum (int a, int b) {
     int min = (a<b) ? a : b;
     return min;
 }
-int count=0
+int count=0;
 void floyd (int n) {
     int t;
     for(int k=1; k<=n; k++) {
